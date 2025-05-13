@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation("org.postgresql:postgresql:42.7.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

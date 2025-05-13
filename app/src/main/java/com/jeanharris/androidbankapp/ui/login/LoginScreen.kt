@@ -44,10 +44,19 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
+            onClick = { viewModel.attemptLogin() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Attempt Login")
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
             onClick = { viewModel.testDbConnection() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Login")
+            Text("Test Connection")
         }
     }
 }

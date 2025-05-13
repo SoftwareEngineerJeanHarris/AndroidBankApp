@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jeanharris.androidbankapp.BuildConfig
+import com.jeanharris.androidbankapp.data.Env
 import com.jeanharris.androidbankapp.DbRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,9 +25,9 @@ class LoginViewModel : ViewModel() {
     fun testDbConnection() {
         viewModelScope.launch(Dispatchers.IO) {
             val conn = DbRepository.connectToDatabase(
-                dbUrl = BuildConfig.DB_URL,
-                dbUser = BuildConfig.DB_USER,
-                dbPassword = BuildConfig.DB_PASSWORD
+                dbUrl = Env.dbUrl,
+                dbUser = Env.dbUser,
+                dbPassword = Env.dbPassword
             )
             if (conn != null) {
                 println("✅ Connected to DB")
@@ -35,6 +35,16 @@ class LoginViewModel : ViewModel() {
             } else {
                 println("❌ Failed to connect to DB")
             }
+        }
+    }
+
+    fun attemptLogin() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val success = DbRepository.validateUserLogin(
+                state.username,
+                state.password
+            )
+            println(if (success) "✅ Login successful" else "❌ Login failed")
         }
     }
 }
