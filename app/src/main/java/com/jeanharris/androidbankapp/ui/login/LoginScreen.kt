@@ -58,5 +58,14 @@ fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
         ) {
             Text("Test Connection")
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Button(
+            onClick = { viewModel.checkIfUsersExist() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Confirm Users Exist")
+        }
     }
 }

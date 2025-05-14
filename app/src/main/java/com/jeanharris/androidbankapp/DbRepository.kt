@@ -46,4 +46,25 @@ object DbRepository {
         }
     }
 
+    fun hasAnyUsers(): Boolean {
+        return try {
+            Class.forName("org.postgresql.Driver")
+            DriverManager.getConnection(
+                Env.dbUrl,
+                Env.dbUser,
+                Env.dbPassword
+            ).use { conn ->
+
+                val sql = "SELECT 1 FROM users LIMIT 1"
+
+                conn.prepareStatement(sql).use { stmt ->
+                    val rs = stmt.executeQuery()
+                    return rs.next()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
 }

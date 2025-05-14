@@ -10,6 +10,8 @@ import com.jeanharris.androidbankapp.DbRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
+
 class LoginViewModel : ViewModel() {
     var state by mutableStateOf(LoginState())
         private set
@@ -45,6 +47,13 @@ class LoginViewModel : ViewModel() {
                 state.password
             )
             println(if (success) "✅ Login successful" else "❌ Login failed")
+        }
+    }
+
+    fun checkIfUsersExist() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val exists = DbRepository.hasAnyUsers()
+            println(if (exists) "✅ Users table has data" else "⚠️ No users found")
         }
     }
 }
